@@ -3,7 +3,9 @@ package com.bitcode.customdialogs;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +35,33 @@ public class MainActivity extends AppCompatActivity {
     private void initializeListeners(){
         btnLogin.setOnClickListener(new BtnLoginClickListener());
         btnLogin1.setOnClickListener(new BtnLogin1ClickListener());
-        //btnLogin2.setOnClickListener(new BtnLogin2ClickListener());
+        btnLogin2.setOnClickListener(new BtnLogin2ClickListener());
+    }
+
+    private class BtnLogin2ClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            LoginDialog loginDialog = new LoginDialog(MainActivity.this);
+            loginDialog.setOnLoginListener(new MyOnLoginListener());
+            loginDialog.show();
+        }
+    }
+
+    class MyOnLoginListener implements LoginDialog.OnLoginListener{
+
+        @Override
+        public void onSuccess() {
+            //mt("Login Successful");
+            Log.e("tag","Login Success!");
+            //Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            //startActivity(intent);
+        }
+
+        @Override
+        public void onFail() {
+            //mt("Login Failure");
+            Log.e("tag","Login fail");
+        }
     }
 
     private class BtnLogin1ClickListener implements View.OnClickListener{

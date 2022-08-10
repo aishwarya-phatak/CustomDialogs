@@ -15,6 +15,17 @@ public class LoginDialog extends Dialog {
     private EditText edtUsername,edtPassword;
     private Button btnSignIn;
 
+    public interface OnLoginListener{
+        void onSuccess();
+        void onFail();
+    }
+
+    private OnLoginListener onLoginListener;
+
+    public void setOnLoginListener(OnLoginListener onLoginListener){
+        this.onLoginListener = onLoginListener;
+    }
+
     public LoginDialog(@NonNull Context context) {
         super(context);
         setContentView(R.layout.login_dialog);
@@ -29,15 +40,22 @@ public class LoginDialog extends Dialog {
     private class BtnSignInClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
+
             if (edtUsername.getText().toString().equals("bitcode") &&
             edtPassword.getText().toString().equals("bitcode123")){
-            //mt("Login Successful");
-                Log.e("tag","Login Successful");
+                //makeToast("Login Successful");
+                //Log.e("tag","Login Successful");
+                onLoginListener.onSuccess();
                  dismiss();
             }else{
-                //mt("Login Failed");
-                Log.e("tag","Login Failed");
+                //makeToast("Login Failed");
+                //Log.e("tag","Login Failed");
+                onLoginListener.onFail();
             }
         }
+    }
+
+    private void makeToast(String text){
+        Toast.makeText(getContext(),text,Toast.LENGTH_LONG).show();
     }
 }
